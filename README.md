@@ -6,6 +6,9 @@ Branches :
             => Dossier Livr1: livrable1
             => Dossier Aides: lien/doc utiles...
 
-- master => code, un sous dossier par partie du code
+- master => code "complet" une fois les branches différentes finies : 
+- Client  => un sous dossier par sous-objet
+- Serveur => un sous dossier par sous-objet
+- Partie Graphique
 
 
