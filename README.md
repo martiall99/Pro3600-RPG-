@@ -1,5 +1,6 @@
 # Pro3600-RPG-
 
+Trello ::   https://trello.com/b/9eB52xrI/pro3600-rpg
 Dossiers doc:
 - Documents => Dossier Doc : règles du jeu,  "concept arts", schéma du programme, caractéristiques de chaque objet...
             => Dossier Adm : compte rendu des réunions...
