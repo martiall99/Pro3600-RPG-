@@ -1,0 +1,73 @@
+//variables Cont_action :
+std::string titre;
+std::string descr;
+//methode de:
+//cont_action
+void modif;
+
+// Variables globales
+// Transfert tran; bibliothèque bibl; Traduction trad; Client: cli int id client1; int id clinet2;
+
+
+// Variable de :
+//bibl :
+Vector <int> tab_id;
+Vector <std::string> tab_titre;
+Vector <std::string> tab_descr;
+int buffer_int;
+std::string buffer_titre;
+std::string buffer_descr;
+
+//Transfert:
+std::string IP_client;
+std::string IP_serveur;
+std::string port_client;
+std::string port_serv;
+
+//Trad
+bool partie_debutee;
+
+//client
+int numero_coup;
+
+
+//methode de:
+//bibl:
+private:
+	void: ajLigne();
+	void: modifLigne();
+	void: rechifLigne();
+	void: interpreterLigne(std::string Ligne); // modifie les buffers et appelle les 3 precedantes
+
+public:
+	cont_action rechAction(int id);
+	void mAJ(std::string MAJ);
+
+//transfert:
+private:
+	void recoitMessage();
+	void decoServeur();
+
+public: // utilisé par traduction:
+	void demandeCo(std::string IP);
+	void demandeDeco();
+	void envoieMess(std::string mess);
+	void coServ(std::string IP); void decoServ();
+
+
+//Traduction:
+Private:
+	void iT0(std::string mess); //décode les messages de type 0
+	void iT1(std::string mess); // ces fonctions sont appelées par decode
+	void iT2(std::string mess); 
+	void iT3(std::string mess); 
+	void iT4(std::string mess);
+	void iT6(std::string mess);
+
+Public: //utilisée par transfert;
+	void decodeTypeMessage(std::string mess);//envoie vers iTx avec x entre 0 et 6 inclus
+	//utilisées par client
+	void sendOK(); void sendNOK(); //T1
+	void envAct(std::string a); //T3
+
+//Fin

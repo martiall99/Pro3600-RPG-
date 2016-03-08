@@ -24,7 +24,7 @@ class Action
 	std::string a_nom;
 	std::string a_descr;
 	std::string a_type;//attaque, magie, potion, buff....
-	std::string toString();
+	std::string toString();// ( + est la concaténation ici) donne a_id+a_type+a_nom+a_descr
 	
 public:
 	Action();//constructeur "vide" créer juste les structures en les laissant vides
@@ -43,7 +43,8 @@ public:
 	
 	void ajAction(int id_a, Action ac);//même chose peut etre Action* act
 	void enlAction(int id_a);
-	std::string toString();//utilisé par l'opérateur <<
+	std::string listeID();//liste juste les ID séparéess par ';'
+	std::string toString();//utilisé par l'opérateur <<, liste les act[i].toString séparéess par un '.'
 	bool verifPasDoublons();
 	
 	Action rechID(int id_r);// c'est la "principale" de cette classe et MEME CHOSE peut être renvoyer un pointeur à la place de l'objet...
@@ -96,6 +97,8 @@ int num_coup_attendu;
 int a_qui_jouer;
 Personnage perso1; 
 Personnage perso2; 
+bool j_1_co;
+bool j_2_co;
 
 //Personnage
 private:
@@ -108,13 +111,52 @@ public://ouioui ce sont bien ses variables
 	Tab_buffs_effectifs buff_eff;
 
 
-//Méthodes de :
+//----------------------------------------------------Méthodes de :
+
+
+//initialisation de TOUTES les variables de tous les "objets" 
+	void init();// c'est litteralement un copié collé de ce qui est en dessous :
+/*
+//Variables communes
+ID_1=1; 
+ID_2=2;
 
 //transfert:
+IP_1="";
+IP_2="";
+port_s="";// A CHANGER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+port_c="";// A CHANGER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+//aiguillage:
+
+
+//maitre_jeu
+num_coup_attendu=0;
+a_qui_jouer=ID_1;
+perso1(); //on rappelle les constructeurs au cas ou
+perso2(); 
+j_1_co=false;
+j_2_co=false;
+
+//Personnage
+
+caracs;
+
+magies();
+attaques();
+objets();
+trad_buffs();
+buff_eff();
+
+
+*/
+
+	
+//transfert:
 private:
-	void tCoClient();//garde l'IP et appelle direct maitre_jeu
-	void tDecoClient();//appelle directement maitre_jeu
-	void recoitMess();
+	void tCoClient();//garde l'IP et appelle direct  co() de maitre_jeu
+	void tDecoClient();//appelle directement deco() de maitre_jeu
+	void recoitMess(); 
 	
 public:
 	// utilisée par aiguillage
@@ -132,9 +174,9 @@ private:
 	void iT3a(std::string mess);
 	
 public://util par transfert
-	void decodeMess(string mess);// appelle les iTx 
+	void decodeMess(string mess);// appelle les iTx ici uniquement iT3 donc en soit n'est pas nécessaire mais le sera pour livrable 3
 	//util par m_j
-	void envActs(std::string a); //T2a
+	void envActs(std::string a); //T2a : ajoute 
 	void envEtats(std::string e);//T4
 	void envDeb();//T1d
 	void envFin(int gagnant);//T1f
@@ -145,19 +187,19 @@ public://util par transfert
 //maitre_jeu
 private:
 
-	void initBibli();
+	void initBibli();// on récupère les 4  attaques.toString(), magies.toString(), objets.toString() , trad_buffs.toString()  puis appelle envBibli()
 	void retransmet3(std::string mess3);
-	void debutJeu();// 1) initTraducteurs() des 2 persos 2) recupere listeActionsPos() pour la biliotheque et envBilbi() , 3)etatsPersos() des 2 puis envEtats()  4)  envDeb() 5) debTour()
+	void debutJeu();// 1) initTraducteurs() des 2 persos 2) initBibli() , 3)etatsPersos() des 2 puis envEtats()  4)  envDeb() 5) debTour()
 	int aGagne();//renvoie l'id du joueur qui a gagné (joueur adverse a PV<=0 ) ou  -1 si 
 	void debTour();//applique le buffsDebuffs() et  regenPA  de chaque personnage, puis lance tour()
 
 	
 public:
 	//util par aiguillage
-	void recoitT3A(int num_coup, int id_j, std::string ac);//verifie id et num_coup, puis Act() de personnage
+	void recoitT3A(int num_coup, int id_j, std::string ac);//verifie id et num_coup, puis incremente  num_coup_attendu, puis Act() de personnage
 	
 	//util par transfert 
-	void co(int id);
+	void co(int id);//si j_1_co==false le met a true, si j_2_co==false le met a vrai puis si (j_1_co==true)&&(j_2_co==true)) lance debutJeu()
 	void deco(int id);
 	
 	//util par perso
@@ -168,9 +210,9 @@ public:
 	
 //personnage
 public:
-	void buffsDebuffs();// sauvegarde buff_eff.parcourBuff dans une var v puis TANT QUE ( v != -1 ) on Act(v) (RAPPEL un buff est une Action "comme les autres")
+	void buffsDebuffs();// sauvegarde buff_eff.parcourBuff dans une var v puis TANT QUE ( v != -1 ) on effectue Act(v) (RAPPEL un buff est une Action "comme les autres")
 	void regenPa();
-	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON cherche dans les traducteurs la bonne action et l'effectue puis lance tour() 
+	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
 	void initTraducteurs();//c'est celle qui ajoute toutes les actions possibles pour un personnage, elle n'est PAS appelée par le constructeur 
-	std::string listeActionsPos(int id_j);
+	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ';'
 	std::string etatsPerso();//recupere le caracs.toString()
