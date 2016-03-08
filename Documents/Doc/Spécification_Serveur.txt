@@ -1,0 +1,99 @@
+//----------------------------CLASSES PRELIMINAIRES (utilisées par personnage)------------------
+
+typedef struct Conteneur_carac Conteneur_carac;
+struct Conteneur_carac
+{
+public:	
+    int PV;
+	int Mana;
+	int PA;
+	int DEF;// defence pour les ATTAQUES
+	int RES;//resistance MAGIQUE
+	int CRIT;// EN %*100
+	int ESQ;// EN %*100
+	int RENV;//renvoi des dommages
+public:	
+	std::string toString();// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que si au pire tout mettre dans le operator<<
+};
+std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Conteneur_carac  et ce qu'il faut
+
+
+class Action
+{
+	int a_id;
+	std::string a_nom;
+	std::string a_descr;
+	std::string a_type;//attaque, magie, potion, buff....
+	std::string toString();
+	
+public:
+	Action();//constructeur "vide" créer juste les structures en les laissant vides
+};
+std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Action  et ce qu'il faut
+
+class Trad_action
+{
+	vector <int> ID;
+	vector <Action> act;// ATTENTION il est possible que ceci ne marche pas (troncature des classes qui heritent ne gardant que les arguments et les methodes de la classe mère (donc en gros rien de ce qui nous interesse) ) et qu'il faille faire avec un pointeur: ' vector<Action*> act; ' et donc fonctionnement différent
+	
+public://utilisees par initTraducteurs() de Personnage
+
+	Trad_action();//constructeur "vide" créer juste les structures en les laissant vides
+	
+	void ajAction(int id_a, Action ac);//même chose peut etre Action* act
+	void enlAction(int id_a);
+	std::string toString();//utilisé par l'opérateur <<
+	bool verifPasDoublons();
+	
+	Action rechID(int id_r);// c'est la "principale" de cette classe et MEME CHOSE peut être renvoyer un pointeur à la place de l'objet...
+};
+std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Trad_action  et ce qu'il faut
+
+
+class Buffs_effectifs
+{
+	vector <int> ID;
+	vector <int> nb_tours_restants;
+	int buffer_boucle;//init a 0 dans le constructeur
+public:		
+	Buffs_effectifs();//constructeur "vide" créer juste les structures en les laissant vides
+	
+	void ajBuff(int ID_b, int nb_tours);
+	void enlBuff(int ID_b);
+	void decrementeBuff(int ID_b);//decremente de 1 le compteur nb_tours_restants  ATTNETION n'appelle PAS enlbuff si arrive à 0 (sinon problème de parcours du tableau)
+	void enlTousBuffsFinis(); parcours le tableau et appelle enlBuff si nb_tours_restants arrive a 0 ATTENTION 
+	int parcourBuff();// lit et renvoie l' ID de l'element en position buffer_boucle, lorsque l'on arrive à la fin du tableau, on appelle enlTousBuffsFinis() , on remet buffer à 0 et on renvoie -1 
+};
+
+
+
+
+
+
+
+
+
+//Variables communes
+// Transfert tr; Aiguillage aig; Superviseur supe; Maitre_jeu m_j; 
+const int id_1; 
+const int id_2;
+
+
+//variables de :
+//transfert:
+std::string IP_1;
+std::string IP_2;
+std::string port_s;
+std::string port_c;
+
+//aiguillage:
+
+
+//superviseur:
+bool ok_1;
+bool ok_2;
+
+//maitre_jeu
+int num_coup_attendu;
+Personnage perso1; 
+Personnage perso2; 

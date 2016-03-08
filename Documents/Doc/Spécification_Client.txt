@@ -5,23 +5,23 @@
 // Transfert tran; bibliothèque bibl; Traduction trad; Client: cli int id client1; int id clinet2;
 
 //Cont_action :
-String titre;
-string descr;
+std::string titre;
+std::string descr;
 
 // Variable de :
 //bibl :
 Vector <int> tab_id;
-Vector <string> tab_titre;
-Vector <string> tab_descr;
+Vector <std::string> tab_titre;
+Vector <std::string> tab_descr;
 int buffer_int;
-string buffer_titre;
-string buffer_descr;
+std::string buffer_titre;
+std::string buffer_descr;
 
 //Transfert:
-string IP_client;
-string IP_serveur;
-string port_client;
-string port_serv;
+std::string IP_client;
+std::string IP_serveur;
+std::string port_client;
+std::string port_serv;
 
 //Trad
 bool partie_debutee;
@@ -34,47 +34,44 @@ int numero_coup;
 void modif;
 
 //bibl:
-
 private:
 	void: ajLigne();
 	void: modifLigne();
 	void: rechifLigne();
-	void: interpreterLigne(string Ligne); // modifie les buffers et appelle les 3 precedantes
+	void: interpreterLigne(std::string Ligne); // modifie les buffers et appelle les 3 precedantes
 
 public:
 	cont_action rechAction(int id);
-	void mAJ(string MAJ);
+	void mAJ(std::string MAJ);
 
 //transfert:
-
 private:
 	void recoitMessage();
 	void decoServeur();
 
 public: // utilisé par traduction:
-	void demandeCo(string IP);
+	void demandeCo(std::string IP);
 	void demandeDeco();
-	void envoieMess(string mess);
+	void envoieMess(std::string mess);
 
 
 //Traduction:
-
 Private:
-	void iT0(string mess); //décode les messages de type 0
-	void iT1(string mess); // ces fonctions sont appelées par decode
-	void iT2(string mess); 
-	void iT3(string mess); 
-	void iT4(string mess);
-	void iT5(string mess);
-	void iT6(string mess);
+	void iT0(std::string mess); //décode les messages de type 0
+	void iT1(std::string mess); // ces fonctions sont appelées par decode
+	void iT2(std::string mess); 
+	void iT3(std::string mess); 
+	void iT4(std::string mess);
+	void iT5(std::string mess);
+	void iT6(std::string mess);
 
 Public: //utilisée par transfert;
-	void decodeTypeMessage(string mess);//envoie vers iTx avec x entre 0 et 6 inclus
+	void decodeTypeMessage(std::string mess);//envoie vers iTx avec x entre 0 et 6 inclus
 	//utilisées par client
 	void sendOK(); void sendNOK(); //T1
 	void demDebut(); void demFin(); //T1
-	void envPers(string p); void envAct(string a); //T3
-	void envShif(string s); // T5
-	void coServ(string IP); void decoServ();//T0
+	void envPers(std::string p); void envAct(std::string a); //T3
+	void envShif(std::string s); // T5
+	void coServ(std::string IP); void decoServ();//T0
 
 //Fin
