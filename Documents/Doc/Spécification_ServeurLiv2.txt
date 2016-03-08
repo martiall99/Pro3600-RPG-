@@ -36,7 +36,8 @@ class Trad_action
 	vector <int> ID;
 	vector <Action> act;// ATTENTION il est possible que ceci ne marche pas (troncature des classes qui heritent ne gardant que les arguments et les methodes de la classe mère (donc en gros rien de ce qui nous interesse) ) et qu'il faille faire avec un pointeur: ' vector<Action*> act; ' et donc fonctionnement différent
 	
-public://utilisees par initTraducteurs() de Personnage
+public:
+	//utilisees par initTraducteurs() de Personnage
 
 	Trad_action();//constructeur "vide" créer juste les structures en les laissant vides
 	
@@ -75,9 +76,9 @@ std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Tab_buffs_effectifs  et c
 
 
 //Variables communes
-// Transfert tr; Aiguillage aig; Superviseur supe; Maitre_jeu m_j; 
-const int id_1; 
-const int id_2;
+// Transfert tr; Aiguillage aig; Maitre_jeu m_j; 
+const int ID_1; 
+const int ID_2;
 
 
 //variables de :
@@ -90,48 +91,86 @@ std::string port_c;
 //aiguillage:
 
 
-//superviseur:
-bool ok_1;
-bool ok_2;
-
 //maitre_jeu
 int num_coup_attendu;
+int a_qui_jouer;
 Personnage perso1; 
 Personnage perso2; 
 
 //Personnage
-Conteneur_carac caracs;
-Trad_action magies;
-Trad_action attaques;
-Trad_action objets;
-Tab_buffs_effectifs buff_eff;
+private:
+	Conteneur_carac caracs;
+public://ouioui ce sont bien ses variables
+	Trad_action magies;
+	Trad_action attaques;
+	Trad_action objets;
+	Trad_action trad_buffs;
+	Tab_buffs_effectifs buff_eff;
 
 
 //Méthodes de :
 
 //transfert:
 private:
-	void tCoClient();//garde l'IP dans IPx et appelle creer0Co
-	void tDecoClient();//appelle creer0Deco
+	void tCoClient();//garde l'IP et appelle direct maitre_jeu
+	void tDecoClient();//appelle directement maitre_jeu
 	void recoitMess();
-	void creer0Co(int id);//créer un message de type 0 dans lequel il attribue l'IDx qui correspond au x de IPx  et transmet a aiguillage (vers superviseur)
-	void creer0Deco(int id);//créer un message de type 0 indiquant l'id du joueur qui s'est déco et transmet a aiguillage (vers superviseur)
 	
-public:// utilisée par aiguillage
+public:
+	// utilisée par aiguillage
 	void envoiMess(std::string mess );
-//util par superviseur
+	//util au tout debut/fin
 	void ouvrirConnex();
+	void fermerConnex();
+	
+	
+	
 	
 //aiguillage
 private:
-	void iT0(std::string mess);
-	void iT1(std::string mess);
-	void iT2(std::string mess);
-	void iT3(std::string mess);
-	void iT4(std::string mess);
-	void iT5(std::string mess);
-	void iT6(std::string mess);
+	//remarque ici pas d'iT1, le jeu debute dès que les 2 cleints ont dit quels personnages ils prenaient
+	void iT3a(std::string mess);
 	
 public://util par transfert
-	void decodeMess(string mess);// appelle les iTx
-	void aCoClient(int id_c);
+	void decodeMess(string mess);// appelle les iTx 
+	//util par m_j
+	void envActs(std::string a); //T2a
+	void envEtats(std::string e);//T4
+	void envDeb();//T1d
+	void envFin(int gagnant);//T1f
+	void envBibli(std::string bib);//T6
+	
+	
+	
+//maitre_jeu
+private:
+
+	void initBibli();
+	void retransmet3(std::string mess3);
+	void debutJeu();// 1) initTraducteurs() des 2 persos 2) recupere listeActionsPos() pour la biliotheque et envBilbi() , 3)etatsPersos() des 2 puis envEtats()  4)  envDeb() 5) debTour()
+	int aGagne();//renvoie l'id du joueur qui a gagné (joueur adverse a PV<=0 ) ou  -1 si 
+	void debTour();//applique le buffsDebuffs() et  regenPA  de chaque personnage, puis lance tour()
+
+	
+public:
+	//util par aiguillage
+	void recoitT3A(int num_coup, int id_j, std::string ac);//verifie id et num_coup, puis Act() de personnage
+	
+	//util par transfert 
+	void co(int id);
+	void deco(int id);
+	
+	//util par perso
+	void changeAQuiJouer();// change id puis lance debTour()
+	void tour();// 0) regarde a_qui_jouer ( PUIS vérifie aGagne() , interromp tout et envFin() si c'est le cas ) puis  1)recupere etatsPersos()  2) envEtats 3)recupere listeActionsPos() du bon joueur  puis 4) envActs() au bon joueur
+	
+	
+	
+//personnage
+public:
+	void buffsDebuffs();// sauvegarde buff_eff.parcourBuff dans une var v puis TANT QUE ( v != -1 ) on Act(v) (RAPPEL un buff est une Action "comme les autres")
+	void regenPa();
+	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON cherche dans les traducteurs la bonne action et l'effectue puis lance tour() 
+	void initTraducteurs();//c'est celle qui ajoute toutes les actions possibles pour un personnage, elle n'est PAS appelée par le constructeur 
+	std::string listeActionsPos(int id_j);
+	std::string etatsPerso();//recupere le caracs.toString()
