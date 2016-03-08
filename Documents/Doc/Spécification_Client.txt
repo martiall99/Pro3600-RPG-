@@ -1,0 +1,80 @@
+
+//Debut
+
+// Variables globales
+// Transfert tran; bibliothèque bibl; Traduction trad; Client: cli int id client1; int id clinet2;
+
+//Cont_action :
+String titre;
+string descr;
+
+// Variable de :
+//bibl :
+Vector <int> tab_id;
+Vector <string> tab_titre;
+Vector <string> tab_descr;
+int buffer_int;
+string buffer_titre;
+string buffer_descr;
+
+//Transfert:
+string IP_client;
+string IP_serveur;
+string port_client;
+string port_serv;
+
+//Trad
+bool partie_debutee;
+
+//client
+int numero_coup;
+
+//methode de:
+//cont_action
+void modif;
+
+//bibl:
+
+private:
+	void: ajLigne();
+	void: modifLigne();
+	void: rechifLigne();
+	void: interpreterLigne(string Ligne); // modifie les buffers et appelle les 3 precedantes
+
+public:
+	cont_action rechAction(int id);
+	void mAJ(string MAJ);
+
+//transfert:
+
+private:
+	void recoitMessage();
+	void decoServeur();
+
+public: // utilisé par traduction:
+	void demandeCo(string IP);
+	void demandeDeco();
+	void envoieMess(string mess);
+
+
+//Traduction:
+
+Private:
+	void iT0(string mess); //décode les messages de type 0
+	void iT1(string mess); // ces fonctions sont appelées par decode
+	void iT2(string mess); 
+	void iT3(string mess); 
+	void iT4(string mess);
+	void iT5(string mess);
+	void iT6(string mess);
+
+Public: //utilisée par transfert;
+	void decodeTypeMessage(string mess);//envoie vers iTx avec x entre 0 et 6 inclus
+	//utilisées par client
+	void sendOK(); void sendNOK(); //T1
+	void demDebut(); void demFin(); //T1
+	void envPers(string p); void envAct(string a); //T3
+	void envShif(string s); // T5
+	void coServ(string IP); void decoServ();//T0
+
+//Fin
