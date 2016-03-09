@@ -73,5 +73,32 @@ Public: //utilisée par transfert;
 	void envPers(std::string p); void envAct(std::string a); //T3
 	void envShif(std::string s); // T5
 	void coServ(std::string IP); void decoServ();//T0
+	
+//Client
+
+public: //utilisé par interface
+	void repClientServ();
+	void choixPerso();
+	void demDebut();
+	void Ok();
+	void choixShif();
+	void ChoixAction();
+	//utilisé par traduction
+	void Oc(int id);
+	void 2p(std::string persos);
+	void 3p(int id, std::string pers);
+	void 1dd();//demande debut partie reçue
+	void 1ds(); // serveur dit que partie débute
+	void 2p(std::string pers);
+	void 3p(int id, std::string pers);
+	void 1dd(); // demande début partie réçue
+	void 1ds(); //serveur dit que partie débute
+	void 5d();
+	void 5c(int id std::string ski);
+	void 5f(int id_gagn);
+	void 6a(std::string maj);
+	void 4a(std::string etats);
+	void 2a(int num_coup, std::string actions_poss);
+	void 3a(int id, std::string act)
 
 //Fin

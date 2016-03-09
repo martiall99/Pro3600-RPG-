@@ -1,12 +1,47 @@
-//variables Cont_action :
-std::string titre;
-std::string descr;
-//methode de:
-//cont_action
-void modif;
+// Cont_action :
+typedef struct Cont_action Cont_action;
+struct Cont_action
+{
+public:	
+	std::string titre;//nom de l'action
+	std::string type;// attaque, magie, objet buff
+	std::string descr;//description
+public:	
+	void modif( std::string ti, std::string ty, std::string des );// change les 3 compos
+	std::string toString();// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que ça marchera et sinon au pire tout mettre dans le operator<<
+						   // ( + est la concaténation ici) donne titre+sep+type+sep+descr avec sep un pont virgule '  ;  '
+};
+std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Cont_action  et ce qu'il faut
+
+
+
+// Conteneur_carac
+typedef struct Conteneur_carac Conteneur_carac;
+struct Conteneur_carac
+{
+public:	
+    int PV;
+	int Mana;
+	int PA;
+	int DEF;// defence pour les ATTAQUES
+	int RES;//resistance MAGIQUE
+	int CRIT;// EN %*100
+	int ESQ;// EN %*100
+	int RENV;//renvoi des dommages
+public:	
+	std::string toString();// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que ça marchera et sinon au pire tout mettre dans le operator<<
+						   // ( + est la concaténation ici) donne PV+sep+Mana+sep+PA+sep+DEF+sep+RES+sep+CRIT+sep+ESQ+sep+RENV avec sep un pont virgule '  ;  '
+};
+std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Conteneur_carac  et ce qu'il faut
+
+
+
+
 
 // Variables globales
-// Transfert tran; bibliothèque bibl; Traduction trad; Client: cli int id client1; int id clinet2;
+// Transfert tran; bibliothèque bibl; Traduction trad; Client cli;
+int ID_1;
+int ID_1;
 
 
 // Variable de :
@@ -15,6 +50,7 @@ Vector <int> tab_id;
 Vector <std::string> tab_titre;
 Vector <std::string> tab_descr;
 int buffer_int;
+std::string buffer_type;
 std::string buffer_titre;
 std::string buffer_descr;
 
@@ -34,14 +70,15 @@ int numero_coup;
 //methode de:
 //bibl:
 private:
-	void: ajLigne();
-	void: modifLigne();
-	void: rechifLigne();
-	void: interpreterLigne(std::string Ligne); // modifie les buffers et appelle les 3 precedantes
-
+	void ajLigne();//créer la ligne dont les caractéristiques sont dans les buffers
+	void modifLigne(int ligne);// remplace la ligne a modifier (dont les nouvelles caractéristiques sont dans les buffers)
+	int rechLigne();// renvoie le numéro de la ligne dont l'ID est stockée dans buffer( ATTENTION il est en général différent de l'ID de l'action), renvoie -1 si l'id n'est pas stockée
+	void interpreterLigne(std::string Ligne); // sépare chaque champ, remplit chaque buffer, appelle rechLigne(), si il y a une correspondance appelle modifLigne(), sinon ajLigne()
+			//séparateur: '  ;  '  entre chaque "composante" (ID, titre, description) d'une action possible
 public:
-	cont_action rechAction(int id);
-	void mAJ(std::string MAJ);
+	Cont_action rechAction(int id);// rechLigne() puis renvoie un cont_action contenant le contenu de la ligne, si aucune correspondance renvoie des champs vides ""
+	void mAJ(std::string MAJ);// sépare à ' / ' et appelle 	interpreterLigne() sur chaque, en remplacant au préalable le buffer_type avec le bon mot ( dans l'ordre : attaques, magie, objets, buffs) 
+			//séparateur: '  /  '  entre chaque action possible   et ' . ' entre chaque type d'actions ( dans l'ordre : attaques, magie, objets, buffs) 
 
 //transfert:
 private:
@@ -56,18 +93,45 @@ public: // utilisé par traduction:
 
 
 //Traduction:
-Private:
-	void iT0(std::string mess); //décode les messages de type 0
-	void iT1(std::string mess); // ces fonctions sont appelées par decode
-	void iT2(std::string mess); 
-	void iT3(std::string mess); 
-	void iT4(std::string mess);
-	void iT6(std::string mess);
-
-Public: //utilisée par transfert;
+Private:// ces fonctions décodents les messages de type Tx, elles sont appelées par decode
+	//pour le liv2 en  général il n'y a aps de choix pour la fonction qui sera appelée suivant le type de message 
+	//en revanche il faut transformer la chaine de caractères en types de variables adéquats en enlevant CERTAINS séparateurs (pas forcément tous)
+	void iT0(std::string mess); //pour liv2 ce sera forcement 0c()
+			//pas de séparateur
+	void iT1(std::string mess); // liv  2 : 1ds() ou 1fs()
+			//pas de séparateur
+	void iT2(std::string mess); // liv  2 : 2a() 
+			//on ne touche PAS au séparateur
+	void iT3(std::string mess); // liv  2 : 3a() pas de séparateur
+	void iT4(std::string mess); // liv  2 : on appelle 4a() DEUX FOIS (une pour chaque perso en séparant suivant ' . ' )
+			//séparateur: ' . ', on ne touche PAS aux ' ; '
+	void iT6(std::string mess); // liv  2 : 6a() 
+			//on ne touche PAS aux séparateurs
+Public: 
+	//utilisée par transfert
 	void decodeTypeMessage(std::string mess);//envoie vers iTx avec x entre 0 et 6 inclus
-	//utilisées par client
-	void sendOK(); void sendNOK(); //T1
-	void envAct(std::string a); //T3
+	
+	//utilisée par client
+	void envAct( int num_coup, int act); //T3 envoie l'action choisie au serveur, avec le num_coup qui a été demandé par le serveur plus tot, et en utilisant l'ID_1 
+	
+	
+//Client
+
+public:
+	void ChoixAction();// on lance un  promt avec une description demandant d'entrer l'action à utiliser,
+					   // (il faut trouver une manière facile à traiter d'entrer ça et l'afficher dans la descri^ption des actions)
+					   // PUIS reconnait ce qui est entré et utilise envAct() avec le bon num_coup et le bon id_action
+	
+	//utilisé par traduction (normalement ~=  dans l'ordre de réception)
+	void Oc(int id_moi, int id_adv);// on sauvegarde les 2 id 
+	void 1ds(); // serveur dit que partie débute, à priori on fait rien de spécial dans le cas du liv2 , ptetre juste afficher "le combat débute" ou un truc du genre ?
+	void 6a(std::string maj); 									
+			//séparateur: on n'y touche PAS c'est bibl qui s'occupe de tout
+	void 4a(int id, std::string etat); // rempli un Conteneur_carac et l'affiche	en précédant de "moi" (= la personne qui joue ) ou "adversaire" suivant l'id
+			//séparateur: '  ;  ' entre chaque carac
+	void 2a(int num_coup, std::string actions_poss); //  affiche les possibilités dans "l'interface", puis   SI  num_coup= -1 s'arrète là , SINON demande à l'utilisateur d'entrer une action avec ChoixAction ()
+			//séparateur: '  ;  '  entre chaque id d'action possible
+	void 3a(int id, std::string act);// affiche "Je " OU "L'adversaire" + "utilise" + le nom de l'action en question, trouvé grâce à rechAction() dans le champ titre du conteneur renvoyé
+	void 1fs(int id_gagnant);// serveur dit que partie est terminée , affiche qui a gagné 
 
 //Fin

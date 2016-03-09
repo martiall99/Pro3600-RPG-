@@ -13,7 +13,8 @@ public:
 	int ESQ;// EN %*100
 	int RENV;//renvoi des dommages
 public:	
-	std::string toString();// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que si au pire tout mettre dans le operator<<
+	std::string toString();// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que ça marchera et sinon au pire tout mettre dans le operator<<
+						   // ( + est la concaténation ici) donne PV+sep+Mana+sep+PA+sep+DEF+sep+RES+sep+CRIT+sep+ESQ+sep+RENV avec sep un pont virgule '  ;  '
 };
 std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Conteneur_carac  et ce qu'il faut
 
@@ -23,8 +24,7 @@ class Action
 	int a_id;
 	std::string a_nom;
 	std::string a_descr;
-	std::string a_type;//attaque, magie, potion, buff....
-	std::string toString();// ( + est la concaténation ici) donne a_id+a_type+a_nom+a_descr
+	std::string toString();// ( + est la concaténation ici) donne a_id+sep+sep+a_nom+sep+a_descr avec sep un pont virgule '  ;  '
 	
 public:
 	Action();//constructeur "vide" créer juste les structures en les laissant vides
@@ -43,7 +43,7 @@ public:
 	
 	void ajAction(int id_a, Action ac);//même chose peut etre Action* act
 	void enlAction(int id_a);
-	std::string listeID();//liste juste les ID séparéess par ';'
+	std::string listeID();//liste juste les ID séparéess par '   ;   '
 	std::string toString();//utilisé par l'opérateur <<, liste les act[i].toString séparéess par un '.'
 	bool verifPasDoublons();
 	
@@ -99,6 +99,7 @@ Personnage perso1;
 Personnage perso2; 
 bool j_1_co;
 bool j_2_co;
+bool deb_tour;
 
 //Personnage
 private:
@@ -137,11 +138,10 @@ perso1(); //on rappelle les constructeurs au cas ou
 perso2(); 
 j_1_co=false;
 j_2_co=false;
+deb_tour=true;
 
 //Personnage
-
-caracs;
-
+caracs();
 magies();
 attaques();
 objets();
@@ -154,13 +154,13 @@ buff_eff();
 	
 //transfert:
 private:
-	void tCoClient();//garde l'IP et appelle direct  co() de maitre_jeu
+	void tCoClient();//garde l'IP (dans le bon slot ) et appelle direct  co() de maitre_jeu
 	void tDecoClient();//appelle directement deco() de maitre_jeu
 	void recoitMess(); 
 	
 public:
 	// utilisée par aiguillage
-	void envoiMess(std::string mess );
+	void envoiMess(std::string mess, int id_dest );
 	//util au tout debut/fin
 	void ouvrirConnex();
 	void fermerConnex();
@@ -176,11 +176,16 @@ private:
 public://util par transfert
 	void decodeMess(string mess);// appelle les iTx ici uniquement iT3 donc en soit n'est pas nécessaire mais le sera pour livrable 3
 	//util par m_j
-	void envActs(std::string a); //T2a : ajoute 
+			//celles qui envoient au 2
 	void envEtats(std::string e);//T4
 	void envDeb();//T1d
 	void envFin(int gagnant);//T1f
 	void envBibli(std::string bib);//T6
+	void retransmet3(std::string a);
+	void envID();//T0c: envoie les 2 ID à la suite 2 fois (une pour chaque destinataire) avec à l'ID du destinataire en PREMIER
+			//celle qui n'envoie qu'à la bonne ID
+	void envActs(std::string a, int ID_dest); //T2a  
+
 	
 	
 	
@@ -188,7 +193,6 @@ public://util par transfert
 private:
 
 	void initBibli();// on récupère les 4  attaques.toString(), magies.toString(), objets.toString() , trad_buffs.toString()  puis appelle envBibli()
-	void retransmet3(std::string mess3);
 	void debutJeu();// 1) initTraducteurs() des 2 persos 2) initBibli() , 3)etatsPersos() des 2 puis envEtats()  4)  envDeb() 5) debTour()
 	int aGagne();//renvoie l'id du joueur qui a gagné (joueur adverse a PV<=0 ) ou  -1 si 
 	void debTour();//applique le buffsDebuffs() et  regenPA  de chaque personnage, puis lance tour()
@@ -196,14 +200,14 @@ private:
 	
 public:
 	//util par aiguillage
-	void recoitT3A(int num_coup, int id_j, std::string ac);//verifie id et num_coup, puis incremente  num_coup_attendu, puis Act() de personnage
+	void recoitT3A(int num_coup, int id_j, std::string ac);//verifie id et num_coup, puis incremente  num_coup_attendu, puis retransmet3() puis Act() de personnage
 	
 	//util par transfert 
-	void co(int id);//si j_1_co==false le met a true, si j_2_co==false le met a vrai puis si (j_1_co==true)&&(j_2_co==true)) lance debutJeu()
+	void co(int id);//SI j_1_co==false le met a true        OU           SI j_2_co==false le met a vrai ET et lance envID() ET lance debutJeu()
 	void deco(int id);
 	
 	//util par perso
-	void changeAQuiJouer();// change id puis lance debTour()
+	void changeAQuiJouer();// change id puis SI deb_tour==true met deb_tourà false et lance debTour() SINON met deb_tour à true et lance tour();
 	void tour();// 0) regarde a_qui_jouer ( PUIS vérifie aGagne() , interromp tout et envFin() si c'est le cas ) puis  1)recupere etatsPersos()  2) envEtats 3)recupere listeActionsPos() du bon joueur  puis 4) envActs() au bon joueur
 	
 	
@@ -214,5 +218,5 @@ public:
 	void regenPa();
 	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
 	void initTraducteurs();//c'est celle qui ajoute toutes les actions possibles pour un personnage, elle n'est PAS appelée par le constructeur 
-	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ';'
-	std::string etatsPerso();//recupere le caracs.toString()
+	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ' /  '
+	std::string etatsPerso();//recupere le caracs.toString() et sépare par ' . '
