@@ -10,6 +10,6 @@ Dossiers doc:
 Dossiers de Codes :
 - Client  => un sous dossier par sous-objet
 - Serveur => un sous dossier par sous-objet
-- Partie Graphique
+- Partie Graphique.
 
 
