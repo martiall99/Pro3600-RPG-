@@ -8,10 +8,9 @@ public:
 	std::string descr;//description
 public:
 	void modif( std::string ti, std::string ty, std::string des );// change les 3 compos
-	std::string toString() const ;// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que ça marchera et sinon au pire tout mettre dans le operator<<
-						   // ( + est la concaténation ici) donne titre+sep+type+sep+descr avec sep un pont virgule '  ;  '
+	std::string toString() const ;// ( + est la concaténation ici) donne titre+sep+type+sep+descr avec sep un pont virgule '  ;  '
 };
-std::ostream& operator<<( std::ostream &flux, Cont_action const& cont );
+std::ostream& operator<<( std::ostream &flux, Cont_action const& cont );//utilise toString()
 
 
 
@@ -30,8 +29,7 @@ public:
 	int ESQ;// EN %*100
 	int RENV;//renvoi des dommages
 public:	
-	std::string toString();// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que ça marchera et sinon au pire tout mettre dans le operator<<
-						   // ( + est la concaténation ici) donne PV+sep+Mana+sep+PA+sep+DEF+sep+RES+sep+CRIT+sep+ESQ+sep+RENV avec sep un pont virgule '  ;  '
+	std::string toString();// ( + est la concaténation ici) donne PV+sep+Mana+sep+PA+sep+DEF+sep+RES+sep+CRIT+sep+ESQ+sep+RENV avec sep un pont virgule '  ;  '
 };
 std::ostream& operator<<( std::ostream &flux, Conteneur_carac const& cont );
 
@@ -82,14 +80,18 @@ public:
 
 //transfert:
 private:
-	void recoitMessage();
-	void decoServeur();
+	void recoitMessage();//transferre le texte du message à decodeTypeMessage()
+	void decoServeur();//appelle
+	
+	
 
-public: // utilisé par traduction:
-	void demandeCo(std::string IP);
-	void demandeDeco();
-	void envoieMess(std::string mess);
-	void coServ(std::string IP); void decoServ();
+public: //utilise par client
+	void demandeCo(std::string IP);//se connecte à l'adresse ip fournie
+	void demandeDeco();//se deconnecte de l'adresse Ip à laquelle est co, fait rien si l'on est pas co
+	// utilisé par traduction:
+	void envoieMess(std::string mess);//envoie la chaine à l'ip du serveur
+	void coServ(std::string IP);//appelée lorsque 
+	void decoServ();
 
 
 //Traduction:
