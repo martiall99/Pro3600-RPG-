@@ -197,6 +197,6 @@ public:
 public:
 	void regenPa();
 	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
-	void initTraducteurs();// elle créé le Trad_action en lançant son constructeur, elle n'est PAS appelée par le constructeur 
+	void initTraducteurs();// ICI elle ne FAIT RIEN DU TOUT (dans le livrable 3 ce sera pas le cas), elle n'est PAS appelée par le constructeur 
 	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ' /  '
 	std::string etatsPerso();//recupere le caracs.toString() et sépare par ' . '
