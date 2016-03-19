@@ -16,7 +16,7 @@ public:
 	std::string toString();// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que ça marchera et sinon au pire tout mettre dans le operator<<
 						   // ( + est la concaténation ici) donne PV+sep+Mana+sep+PA+sep+DEF+sep+RES+sep+CRIT+sep+ESQ+sep+RENV avec sep un pont virgule '  ;  '
 };
-std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Conteneur_carac  et ce qu'il faut
+std::ostream& operator<<( std::ostream &flux, Conteneur_carac const& cont );
 
 
 class Action
@@ -29,45 +29,23 @@ class Action
 public:
 	Action();//constructeur "vide" créer juste les structures en les laissant vides
 };
-std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Action  et ce qu'il faut
+std::ostream& operator<<( std::ostream &flux, Action const& act );
 
 class Trad_action
 {
-	vector <int> ID;
-	vector <Action> act;// ATTENTION il est possible que ceci ne marche pas (troncature des classes qui heritent ne gardant que les arguments et les methodes de la classe mère (donc en gros rien de ce qui nous interesse) ) et qu'il faille faire avec un pointeur: ' vector<Action*> act; ' et donc fonctionnement différent
 	
-public:
+public:// POUR LE LIV2 ne sert qu'a regrouper les textes (nom, description...) des Actions qu'il créé et initialise
 	//utilisees par initTraducteurs() de Personnage
 
-	Trad_action();//constructeur "vide" créer juste les structures en les laissant vides
+	Trad_action();//constructeur qui défini (code les fonctions supplémentaire par rapport à la classe Action) puis créé plusieurs objets qui HERITENT de la classe action
+			// genre attaque simple, attaque puissante, bouclier, boule de feu , potion de vie, potion de mana ça devrait suffire pour liv2
 	
-	void ajAction(int id_a, Action ac);//même chose peut etre Action* act
-	void enlAction(int id_a);
-	std::string listeID();//liste juste les ID séparéess par '   ;   '
-	std::string toString();//utilisé par l'opérateur <<, liste les act[i].toString séparéess par un '.'
-	bool verifPasDoublons();
-	
-	Action rechID(int id_r);// c'est la "principale" de cette classe et MEME CHOSE peut être renvoyer un pointeur à la place de l'objet...
-};
-std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Trad_action  et ce qu'il faut
 
+	std::string listeID();//liste juste les ID séparéess par '   ;   ' , 
+	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '.'
 
-class Tab_buffs_effectifs
-{
-	vector <int> ID;
-	vector <int> nb_tours_restants;
-	int buffer_boucle;//init a 0 dans le constructeur
-public:		
-	Tab_buffs_effectifs();//constructeur "vide" créer juste les structures en les laissant vides
-	
-	void ajBuff(int ID_b, int nb_tours);
-	void enlBuff(int ID_b);
-	void decrementeBuff(int ID_b);//decremente de 1 le compteur nb_tours_restants  ATTNETION n'appelle PAS enlbuff si arrive à 0 (sinon problème de parcours du tableau)
-	void enlTousBuffsFinis(); parcours le tableau et appelle enlBuff si nb_tours_restants arrive a 0 ATTENTION 
-	int parcourBuff();// lit et renvoie l' ID de l'element en position buffer_boucle, lorsque l'on arrive à la fin du tableau, on appelle enlTousBuffsFinis() , on remet buffer à 0 et on renvoie -1 
-	std::string toString();
 };
-std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Tab_buffs_effectifs  et ce qu'il faut
+std::ostream& operator<<( std::ostream &flux, Trad_action const& trad);//utilise toString()
 
 
 // --------------------------------"VRAIS" OBJETS ------------------------------
