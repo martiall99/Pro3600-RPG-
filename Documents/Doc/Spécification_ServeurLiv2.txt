@@ -66,8 +66,8 @@ const int ID_2;
 //transfert:
 std::string IP_1;
 std::string IP_2;
-std::string port_s;//un seul port serveur
-std::string port_c;//c'est le même pour les 2 clients aussi
+const std::string port_s;//un seul port serveur
+const std::string port_c;//c'est le même pour les 2 clients aussi
 
 
 //maitre_jeu
@@ -86,8 +86,6 @@ public://ouioui ce sont bien ses variables
 	Trad_action magies;
 	Trad_action attaques;
 	Trad_action objets;
-	Trad_action trad_buffs;
-	Tab_buffs_effectifs buff_eff;
 
 
 //----------------------------------------------------Méthodes de :
@@ -124,9 +122,6 @@ caracs();
 magies();
 attaques();
 objets();
-trad_buffs();
-buff_eff();
-
 */
 
 
@@ -159,6 +154,7 @@ private:
 public://util par transfert
 	void decodeMess(string mess);// appelle les iTx ici uniquement iT3 donc en soit n'est pas nécessaire mais le sera pour livrable 3
 	//util par m_j
+		// POUR TOUTES CES FONCTIONS D'ENVOI : se référer au LIVRABLE 1 pour avoir la DESCRIPTION de l'architecture de chaque type de message
 			//celles qui envoient au 2 grâce à deux appels de envoiMess()
 	void envEtats(std::string e);//T4
 	void envDeb();//T1d
@@ -177,7 +173,7 @@ public://util par transfert
 //maitre_jeu
 private:
 
-	void initBibli();// on récupère les 4  attaques.toString(), magies.toString(), objets.toString() , trad_buffs.toString()  puis appelle envBibli()
+	void initBibli();// on récupère les 3  attaques.toString(), magies.toString(), objets.toString()   puis appelle envBibli()
 	void debutJeu();// 1) initTraducteurs() des 2 persos 2) initBibli() , 3)etatsPersos() des 2 puis envEtats()  4)  envDeb() 5) debTour()
 	int aGagne();//renvoie l'id du joueur qui a gagné (joueur adverse a PV<=0 ) ou  -1 si 
 	void debTour();//applique le  regenPA  de chaque personnage, puis lance tour()
@@ -189,7 +185,7 @@ public:
 	
 	//util par transfert 
 	void co(int id);//SI j_1_co==false le met a true        OU           SI j_2_co==false le met a vrai ET et lance envID() ET lance debutJeu()
-	void deco(int id);
+	void deco(int id);// arrete le jeu avec un envFin() avec en id 0 pour dire que c'est une erreur/pas de gagnant
 	
 	//util par perso
 	void changeAQuiJouer();// change id puis SI deb_tour==true met deb_tourà false et lance debTour() SINON met deb_tour à true et lance tour();
@@ -201,6 +197,6 @@ public:
 public:
 	void regenPa();
 	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
-	void initTraducteurs();//c'est celle qui ajoute toutes les actions possibles pour un personnage, elle n'est PAS appelée par le constructeur 
+	void initTraducteurs();// elle créé le Trad_action en lançant son constructeur, elle n'est PAS appelée par le constructeur 
 	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ' /  '
 	std::string etatsPerso();//recupere le caracs.toString() et sépare par ' . '

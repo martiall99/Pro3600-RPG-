@@ -1,10 +1,10 @@
-// Cont_action :
+﻿// Cont_action :
 typedef struct Cont_action Cont_action;
 struct Cont_action
 {
 public:
 	std::string titre;//nom de l'action
-	std::string type;// attaque, magie, objet buff
+	std::string type;// attaque, magie, objet
 	std::string descr;//description
 public:
 	void modif( std::string ti, std::string ty, std::string des );// change les 3 compos
@@ -76,7 +76,7 @@ private:
 public:
 	Cont_action rechAction(int id);// rechLigne() puis renvoie un cont_action contenant le contenu de la ligne, si aucune correspondance renvoie des champs vides ""
 	void mAJ(std::string MAJ);// sépare à ' / ' et appelle 	interpreterLigne() sur chaque, en remplacant au préalable le buffer_type avec le bon mot ( dans l'ordre : attaques, magie, objets, buffs) 
-			//séparateur: '  /  '  entre chaque action possible   et ' . ' entre chaque type d'actions ( dans l'ordre : attaques, magie, objets, buffs) 
+			//séparateur: '  /  '  entre chaque action possible   et ' . ' entre chaque type d'actions ( dans l'ordre : attaques, magie, objets) 
 
 //transfert:
 private:
@@ -96,8 +96,13 @@ public: //utilise par client
 
 //Traduction:
 Private:// ces fonctions décodents les messages de type Tx, elles sont appelées par decode
-	//pour le liv2 en  général il n'y a aps de choix pour la fonction qui sera appelée suivant le type de message 
+	//pour le liv2 en  général il n'y a pas de choix pour la fonction qui sera appelée suivant le type de message 
 	//en revanche il faut transformer la chaine de caractères en types de variables adéquats en enlevant CERTAINS séparateurs (pas forcément tous)
+
+	// se REFERER au livrable 1 pour avoir l'ARCHITECTURE de chaque type de message, ATTENTION cette architecture dit que certaines parties du message sont des INT par exemple, 
+	//mais le message est transmis sour forme d'un STING UNIQUE, au codeur de regarder comment découper son message et convertir les string en int par exemple pour retrouver les bons types
+
+
 	void iT0(std::string mess); //pour liv2 ce sera forcement 0c()
 			//pas de séparateur
 	void iT1(std::string mess); // liv  2 : 1ds() ou 1fs()
