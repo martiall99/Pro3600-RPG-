@@ -27,19 +27,21 @@ class Action
 	std::string toString();// ( + est la concaténation ici) donne a_id+sep+sep+a_nom+sep+a_descr avec sep un pont virgule '  ;  '
 	
 public:
-	Action();//constructeur "vide" créer juste les structures en les laissant vides
+	Action(int id,std::string nom, std::string desc );
 };
 std::ostream& operator<<( std::ostream &flux, Action const& act );
 
 class Trad_action
 {
 	
-public:// POUR LE LIV2 ne sert qu'a regrouper les textes (nom, description...) des Actions qu'il créé et initialise
+public:// pour le LIV2 c'est PAS encore un "tableau intelligent" juste quelquechose qui définit et créé des objets
 	//utilisees par initTraducteurs() de Personnage
 
 	Trad_action();//constructeur qui défini (code les fonctions supplémentaire par rapport à la classe Action) puis créé plusieurs objets qui HERITENT de la classe action
 			// genre attaque simple, attaque puissante, bouclier, boule de feu , potion de vie, potion de mana ça devrait suffire pour liv2
-	
+			
+			
+	Action rechID(int id_r);// c'est la "principale" de cette classe, elle return() un des objets de type Action construit par le constructeur Trad_action() en focntion de l'id
 
 	std::string listeID();//liste juste les ID séparéess par '   ;   ' , 
 	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '.'
@@ -64,10 +66,8 @@ const int ID_2;
 //transfert:
 std::string IP_1;
 std::string IP_2;
-std::string port_s;
-std::string port_c;
-
-//aiguillage:
+std::string port_s;//un seul port serveur
+std::string port_c;//c'est le même pour les 2 clients aussi
 
 
 //maitre_jeu
@@ -94,7 +94,8 @@ public://ouioui ce sont bien ses variables
 
 
 //initialisation de TOUTES les variables de tous les "objets" 
-	void init();// c'est litteralement un copié collé de ce qui est en dessous :
+	void init();// c'est LITTERALEMENT un copié collé de ce qui est en dessous :
+
 /*
 //Variables communes
 ID_1=1; 
@@ -126,21 +127,25 @@ objets();
 trad_buffs();
 buff_eff();
 
-
 */
+
+
+
+
+
 
 	
 //transfert:
 private:
 	void tCoClient();//garde l'IP (dans le bon slot ) et appelle direct  co() de maitre_jeu
 	void tDecoClient();//appelle directement deco() de maitre_jeu
-	void recoitMess(); 
+	void recoitMess(); //appelle direct decodeMess() de aiguillage
 	
 public:
 	// utilisée par aiguillage
-	void envoiMess(std::string mess, int id_dest );
+	void envoiMess(std::string mess, int id_dest );//envoie le mess à l'IP_x avec x tel que  id_dest = ID_x (ya que 2 x possible un simple if else if else (erreur)  suffit)
 	//util au tout debut/fin
-	void ouvrirConnex();
+	void ouvrirConnex();// ouvre DEUX connexions à travers  1 port
 	void fermerConnex();
 	
 	
@@ -148,19 +153,21 @@ public:
 	
 //aiguillage
 private:
-	//remarque ici pas d'iT1, le jeu debute dès que les 2 cleints ont dit quels personnages ils prenaient
+	//remarque ici pas d'iT1, le jeu debute dès que les 2 clients sont connectés
 	void iT3a(std::string mess);
 	
 public://util par transfert
 	void decodeMess(string mess);// appelle les iTx ici uniquement iT3 donc en soit n'est pas nécessaire mais le sera pour livrable 3
 	//util par m_j
-			//celles qui envoient au 2
+			//celles qui envoient au 2 grâce à deux appels de envoiMess()
 	void envEtats(std::string e);//T4
 	void envDeb();//T1d
-	void envFin(int gagnant);//T1f
+	void envFin(int gagnant);//T1f 
 	void envBibli(std::string bib);//T6
-	void retransmet3(std::string a);
-	void envID();//T0c: envoie les 2 ID à la suite 2 fois (une pour chaque destinataire) avec à l'ID du destinataire en PREMIER
+	void retransmet3(std::string a);//renvoie l'action qui vient dêtre effectuee AUX DEUX clients 
+	void envID();//T0c: envoie les 2 ID à la suite 2 fois (une pour chaque destinataire) avec à chaque fois l'ID du destinataire en PREMIER ( ATTENTION !! )
+
+
 			//celle qui n'envoie qu'à la bonne ID
 	void envActs(std::string a, int ID_dest); //T2a  
 
@@ -173,7 +180,7 @@ private:
 	void initBibli();// on récupère les 4  attaques.toString(), magies.toString(), objets.toString() , trad_buffs.toString()  puis appelle envBibli()
 	void debutJeu();// 1) initTraducteurs() des 2 persos 2) initBibli() , 3)etatsPersos() des 2 puis envEtats()  4)  envDeb() 5) debTour()
 	int aGagne();//renvoie l'id du joueur qui a gagné (joueur adverse a PV<=0 ) ou  -1 si 
-	void debTour();//applique le buffsDebuffs() et  regenPA  de chaque personnage, puis lance tour()
+	void debTour();//applique le  regenPA  de chaque personnage, puis lance tour()
 
 	
 public:
@@ -192,7 +199,6 @@ public:
 	
 //personnage
 public:
-	void buffsDebuffs();// sauvegarde buff_eff.parcourBuff dans une var v puis TANT QUE ( v != -1 ) on effectue Act(v) (RAPPEL un buff est une Action "comme les autres")
 	void regenPa();
 	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
 	void initTraducteurs();//c'est celle qui ajoute toutes les actions possibles pour un personnage, elle n'est PAS appelée par le constructeur 
