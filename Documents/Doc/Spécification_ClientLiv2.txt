@@ -80,8 +80,8 @@ public:
 
 //transfert:
 private:
-	void recoitMessage();//transferre le texte du message à decodeTypeMessage()
-	void decoServeur();//appelle
+	void recoitMessage();//transfere le texte du message à decodeTypeMessage()
+	void decoServeur();//appelé lorsque le serveur se deco (pb connexion) , lance servPerdu()
 	
 	
 
@@ -90,9 +90,6 @@ public: //utilise par client
 	void demandeDeco();//se deconnecte de l'adresse Ip à laquelle est co, fait rien si l'on est pas co
 	// utilisé par traduction:
 	void envoieMess(std::string mess);//envoie la chaine à l'ip du serveur
-	void coServ(std::string IP);//appelée lorsque 
-	void decoServ();
-
 
 //Traduction:
 Private:// ces fonctions décodents les messages de type Tx, elles sont appelées par decode
@@ -119,7 +116,8 @@ Public:
 	void decodeTypeMessage(std::string mess);//envoie vers iTx avec x entre 0 et 6 inclus
 	
 	//utilisée par client
-	void envAct( int num_coup, int act); //T3 envoie l'action choisie au serveur, avec le num_coup qui a été demandé par le serveur plus tot, et en utilisant l'ID_1 
+	void envAct( int num_coup, int act); //T3 envoie l'action choisie au serveur , avec le num_coup qui a été demandé par le serveur plus tot,
+										//  en utilisant l'ID_1 et en convertissant le tout sous forme d'un unique string
 	
 	
 //Client
@@ -140,5 +138,9 @@ public:
 			//séparateur: '  ;  '  entre chaque id d'action possible
 	void 3a(int id, std::string act);// affiche "Je " OU "L'adversaire" + "utilise" + le nom de l'action en question, trouvé grâce à rechAction() dans le champ titre du conteneur renvoyé
 	void 1fs(int id_gagnant);// serveur dit que partie est terminée , affiche qui a gagné 
+	
+	
+	//utilise par transfert
+	void servPerdu();// ecrit que le serveur s'est déconnecté puis arrète tout
 
 //Fin
