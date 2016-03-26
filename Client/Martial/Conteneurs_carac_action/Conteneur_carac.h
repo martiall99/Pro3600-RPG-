@@ -11,7 +11,7 @@ struct Conteneur_carac
 //Je n'arrivais pas à compiler à
 // de la conversion char en int ou
 // un autre dans ce genre
-/*
+
 public:
     int PV;
 	int Mana;
@@ -21,17 +21,7 @@ public:
 	int CRIT;// EN %*100
 	int ESQ;// EN %*100
 	int RENV;//renvoi des dommages
-*/
 
-public:
-    std::string PV;
-	std::string Mana;
-	std::string PA;
-	std::string DEF;// defence pour les ATTAQUES
-	std::string RES;//resistance MAGIQUE
-	std::string CRIT;// EN %*100
-	std::string ESQ;// EN %*100
-	std::string RENV;//renvoi des dommages
 
 public:
 	std::string toString() const;// PAS sur qu'on ait le droit comme c'est une struct, mais je crois que ça marchera et sinon au pire tout mettre dans le operator<<
@@ -42,4 +32,4 @@ std::ostream& operator<<( std::ostream &flux, Conteneur_carac const& cont_car );
 
 
 
-#endif // CONTENEUR_CARAC_H_INCLUDED
+#endif // CONTENEUR_CARAC_H_INCLUD
