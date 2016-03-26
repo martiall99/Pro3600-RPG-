@@ -123,7 +123,7 @@ Private:// ces fonctions décodents les messages de type Tx, elles sont appelée
 	//en revanche il faut transformer la chaine de caractères en types de variables adéquats en enlevant CERTAINS séparateurs (pas forcément tous)
 
 	// se REFERER au livrable 1 pour avoir l'ARCHITECTURE de chaque type de message, ATTENTION cette architecture dit que certaines parties du message sont des INT par exemple, 
-	//mais le message est transmis sour forme d'un STING UNIQUE, au codeur de regarder comment découper son message et convertir les string en int par exemple pour retrouver les bons types
+	//mais le message est transmis sour forme d'un STRING UNIQUE, au codeur de regarder comment découper son message et convertir les string en int par exemple pour retrouver les bons types
 	
 	
 	
