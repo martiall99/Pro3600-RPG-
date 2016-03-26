@@ -3,8 +3,6 @@
 #include <iostream>
 #include <string>
 
-string to_String(int a);
-
 // Conteneur_carac
 typedef struct Conteneur_carac Conteneur_carac;
 struct Conteneur_carac
