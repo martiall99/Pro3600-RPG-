@@ -4,6 +4,7 @@ Trad_obj::Trad_obj()
 {
     PotionVie a_1(1,"Petite potion de vie", "Rend peu de PV.", 10);
     PotionVie a_2(2,"Grande potion de vie", "Rend beaucoup de PV.", 30);
+    Action no_action(0,"","");
 }
 
 Action Trad_obj::rechID(int id_r)
