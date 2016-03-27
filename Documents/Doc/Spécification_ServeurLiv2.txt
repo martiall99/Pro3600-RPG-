@@ -54,7 +54,7 @@ public:// pour le LIV2 c'est PAS encore un "tableau intelligent" juste quelquech
 	Action rechID(int id_r);// c'est la "principale" de cette classe, elle return() un des objets de type Action construit par le constructeur Trad_action() en focntion de l'id
 
 	std::string listeID();//liste juste les ID séparéess par '   ;   ' , 
-	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '.'
+	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '/'
 
 };
 std::ostream& operator<<( std::ostream &flux, Trad_attaq const& trad);//utilise toString()
@@ -73,7 +73,7 @@ public:// pour le LIV2 c'est PAS encore un "tableau intelligent" juste quelquech
 	Action rechID(int id_r);// c'est la "principale" de cette classe, elle return() un des objets de type Action construit par le constructeur Trad_action() en focntion de l'id
 
 	std::string listeID();//liste juste les ID séparéess par '   ;   ' , 
-	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '.'
+	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '/'
 
 };
 std::ostream& operator<<( std::ostream &flux, Trad_obj const& trad);//utilise toString()
@@ -93,27 +93,11 @@ public:// pour le LIV2 c'est PAS encore un "tableau intelligent" juste quelquech
 	Action rechID(int id_r);// c'est la "principale" de cette classe, elle return() un des objets de type Action construit par le constructeur Trad_action() en focntion de l'id
 
 	std::string listeID();//liste juste les ID séparéess par '   ;   ' , 
-	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '.'
+	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '/'
 
 };
 std::ostream& operator<<( std::ostream &flux, Trad_magie const& trad);//utilise toString()
 
-class Trad_magie
-{
-	
-public:// pour le LIV2 c'est PAS encore un "tableau intelligent" juste quelquechose qui définit et créé des objets
-	//utilisees par initTraducteurs() de Personnage
-
-	Trad_magie();//constructeur qui créé en son sein (construit) boule de feu
-			
-			
-	Action rechID(int id_r);// c'est la "principale" de cette classe, elle return() un des objets de type Action construit par le constructeur Trad_action() en focntion de l'id
-
-	std::string listeID();//liste juste les ID séparéess par '   ;   ' , 
-	std::string toString();//utilisé par l'opérateur <<,  lance le toString() de chaque action et les liste, séparéess par un '.'
-
-};
-std::ostream& operator<<( std::ostream &flux, Trad_magie const& trad);//utilise toString()
 
 
 // --------------------------------"VRAIS" OBJETS ------------------------------
@@ -261,8 +245,14 @@ public:
 	
 //personnage
 public:
+	void recevoirDegats(int min, int max);// utilise aleat() et implemente la formule de degats (qui depend de la DEF de ce perso) qu'on avait mise dans le liv1
+	void recevoirDegatsMagiques(int min , int max);// meme chose avec RES 
+	void recevoirSoins(int min, int max);
+	void changerArmure(int ajMin, int ajMax);
 	void regenPa();
 	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
 	void initTraducteurs();// ICI elle ne FAIT RIEN DU TOUT (dans le livrable 3 ce sera pas le cas), elle n'est PAS appelée par le constructeur 
 	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ' /  '
 	std::string etatsPerso();//recupere le caracs.toString() et sépare par ' . '
+
+	int aleat(int min, int max); // utiliser rand pour faire un nombre aleat entre min et max https://openclassrooms.com/courses/l-aleatoire-en-c-et-c-se-servir-de-rand-1
