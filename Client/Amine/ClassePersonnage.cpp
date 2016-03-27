@@ -8,3 +8,10 @@
 
 #include "ClassePersonnage.hpp"
 
+Personnage::Personnage()
+{
+    m_vie = 100;
+    m_mana = 100;
+    m_nomArme = "Coupdepoing";
+    m_degatsArme = 2;
+}

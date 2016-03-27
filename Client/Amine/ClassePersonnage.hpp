@@ -11,7 +11,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
-/*
+
 class Personnage
 {
 public:
@@ -31,4 +31,3 @@ private:
     std::string m_nomArme;
     int m_degatsArme;
 };
-*/
