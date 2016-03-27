@@ -39,13 +39,14 @@ void _Oc(int id_moi, int id_adv)// on sauvegarde les 2 id (on les affiche pour l
 {
     id_moi=ID_1;
     id_adv=ID_2;
-    cout << id_moi;
+    cout << id_moi ;
     cout << id_adv;
     
 }
 void _1ds() // serveur dit que partie débute, à priori on fait rien de spécial dans le cas du liv2 , ptetre juste afficher "le combat débute" ou un truc du genre ?
 {
-    cout << "Début du combat ";
+    afficher ("Début du combat");
+    //cout << "Début du combat" <<endl;
 }
 void _6a(std::string maj) // envoie juste a mAJ() sans rien faire d'autre
 //séparateur: on n'y touche PAS c'est bibl qui s'occupe de tout
@@ -105,7 +106,7 @@ void _4a(int id, std::string etat) // rempli un Conteneur_carac et l'affiche	en 
 void _2a(int num_coup, std::string actions_poss) //  affiche les possibilités dans "l'interface", puis   SI  num_coup= -1 s'arrète là , SINON demande à l'utilisateur d'entrer une action avec ChoixAction () puis
 //séparateur: '  ;  '  entre chaque id d'action possible
 {
-    cout << "Actions possibles";
+    afficher ( "Actions possibles");
     if (num_coup!= -1)
     {
         afficher ("Choisissez votre action");
@@ -136,8 +137,8 @@ void _3a(int id, std::string act)// affiche "Je " OU "L'adversaire" + "utilise" 
 
 void _1fs(int id_gagnant)// serveur dit que partie est terminée , affiche qui a gagné
 {
-    cout << "Partie términée";
-    cout << "Le gagnat est" << to_String(id_gagnant) <<endl;
+    afficher ("Partie términée");
+    cout << "Le gagnat est   " << to_String(id_gagnant) <<endl;
     
 }
 
@@ -146,6 +147,18 @@ void _1fs(int id_gagnant)// serveur dit que partie est terminée , affiche qui a
 int main ()
 
 {
+    _Oc(0, 1);
+   // _1ds();
+    afficher ("Début du combat"); //J'ai mis la fonction directement parce que l'appel ne marche pas
+    /* _6a ();
+    _4a(222,);
+    _2a(69, );
+    _3a(333,); */
+    _1fs(999999);
+    
+    
+    
+    
     string a;
     afficher ("ecrit un truc grosse merde");
     lire (a);
