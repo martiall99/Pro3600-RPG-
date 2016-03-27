@@ -124,3 +124,23 @@ void bibl::testBibl()
         cout << tab_id[i] << "||" << tab_type[i] << "||"  << tab_titre[i] << "||"  << tab_descr[i] <<endl;
     }
 }
+
+/*Cont_action bibl::rechAction(int id)
+{
+    int noLigne;
+    buffer_int = id;
+
+    noLigne = rechLigne();
+    if(noLigne == -1) {
+        buffer_type = "";
+        buffer_titre = "";
+        buffer_descr = "";
+    } else {
+        buffer_type = tab_type;
+        buffer_titre = tab_titre;
+        buffer_descr = tab_descr;
+    }
+
+    return(buffer_int, buffer_type, buffer_titre, buffer_descr);
+}
+*/
