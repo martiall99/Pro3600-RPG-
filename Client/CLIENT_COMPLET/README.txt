@@ -1,8 +1,8 @@
-Codé pour Windows (testé sous Seven avec visual studio 2015)
-1° Inclure dans le projet
-2° A modifier pour utiliser
+CodÃ© pour Windows (testÃ© sous Seven avec visual studio 2015)
+1Â° Inclure dans le projet
+2Â° A modifier pour utiliser
 
-======================================1° Inclure dans le projet
+======================================1Â° Inclure dans le projet
 -------------Sous Visual Studio
 Headers:
 	transf/ClienC.h
@@ -19,13 +19,13 @@ Objets:
 	co/Chrono.cpp
 	co/Client_E.cpp
 	co/debug.cpp
-	co/Ecr.cpp
+	co/Ecrire.cpp
 	co/Lire.cpp
 	co/Serveur_E.cpp
 
 
 ------------------Sous code:blocks 
- ( ATTENTION : NON testé, Ceci ne COMPILERA peut etre PAS avec CodeBlocks sous windows avec MINGW )
+ ( ATTENTION : NON testÃ©, Ceci ne COMPILERA peut etre PAS avec CodeBlocks sous windows avec MINGW )
 Inclure dans le projet:
 Headers:
 	transf/ClienC.h
@@ -49,11 +49,11 @@ Objets:
 
 	co/To_stringcpp.cpp
 
-======================================2° A modifier pour utiliser
+======================================2Â° A modifier pour utiliser
 
 Dans le transf/main.cpp, fonction main() , modifier la ligne :
 	demandeCo(1,"D:/TEST_PRO3600/");
 en remplacant par l'endroit ou le client et le serveur echangeront leur messages (sous forme de fichier texte)
 Pour l'instant il n'y a QUE le Client (le serveur nous donne encore des erreurs)
 ATTENTION, il faut que le dossier en question laisse les DROITS en ECRITURE 
- (click droit sur le dossier /propriété/ decocher lecture seule)
+ (click droit sur le dossier /propriÃ©tÃ©/ decocher lecture seule)
