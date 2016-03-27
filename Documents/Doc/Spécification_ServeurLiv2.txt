@@ -250,8 +250,8 @@ public:
 	void recevoirSoins(int min, int max);
 	void changerArmure(int ajMin, int ajMax);
 	void regenPa();
-	void utiliserPa(int coutPa);
-	void utiliserMana(int coutMana);
+	bool utiliserPa(int coutPa); //renvoie true si le personnage a assez de Pa et les soustrait
+	bool utiliserMana(int coutMana); //renvoie true si le personnage a assez de mana et la soustrait
 	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
 	void initTraducteurs();// ICI elle ne FAIT RIEN DU TOUT (dans le livrable 3 ce sera pas le cas), elle n'est PAS appelée par le constructeur 
 	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ' /  '
