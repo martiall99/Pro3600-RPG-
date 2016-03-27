@@ -6,20 +6,29 @@
 //  Copyright © 2016 Amine Tekni. All rights reserved.
 //
 
-#ifndef ClassePersonnage_hpp
+//#ifndef ClassePersonnage_hpp
 #define ClassePersonnage_hpp
-
+#include <iostream>
 #include <stdio.h>
-
-int PV;
-int Mana;
-int PA;
-int DEF;// defence pour les ATTAQUES
-int RES;//resistance MAGIQUE
-int CRIT;// EN %*100
-int ESQ;// EN %*100
-int RENV;//renvoi des dommages
-
-
-
-#endif /* ClassePersonnage_hpp */
+#include <string>
+/*
+class Personnage
+{
+public:
+    
+    Personnage(); //Constructeur
+    void recevoirDegats(int nbDegats);
+    void attaquer(Personnage &cible);
+    void boirePotionDeVie(int quantitePotion);
+    void changerArme(std::string nomNouvelleArme, int degatsNouvelleArme);
+    bool estVivant();
+    
+    
+private:
+    
+    int m_vie;
+    int m_mana;
+    std::string m_nomArme;
+    int m_degatsArme;
+};
+*/
