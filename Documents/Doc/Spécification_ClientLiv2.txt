@@ -163,16 +163,16 @@ public:
 		//UTILISER la fonction coupeChaine() (voir plus haut) pour séparer selon un separateur si besoin est
 		
 		
-	void Oc(int id_moi, int id_adv);// on sauvegarde les 2 id (on les affiche pour le debug)
-	void 1ds(); // serveur dit que partie débute, à priori on fait rien de spécial dans le cas du liv2 , ptetre juste afficher "le combat débute" ou un truc du genre ?
-	void 6a(std::string maj); // envoie juste a mAJ() sans rien faire d'autre									
+	void _Oc(int id_moi, int id_adv);// on sauvegarde les 2 id (on les affiche pour le debug)
+	void _1ds(); // serveur dit que partie débute, à priori on fait rien de spécial dans le cas du liv2 , ptetre juste afficher "le combat débute" ou un truc du genre ?
+	void _6a(std::string maj); // envoie juste a mAJ() sans rien faire d'autre									
 			//séparateur: on n'y touche PAS c'est bibl qui s'occupe de tout
-	void 4a(int id, std::string etat); // rempli un Conteneur_carac et l'affiche	en précédant de "moi" (= la personne qui joue ) ou "adversaire" suivant l'id
+	void _4a(int id, std::string etat); // rempli un Conteneur_carac et l'affiche	en précédant de "moi" (= la personne qui joue ) ou "adversaire" suivant l'id
 			//séparateur: '  ;  ' entre chaque carac
-	void 2a(int num_coup, std::string actions_poss); //  affiche les possibilités dans "l'interface", puis   SI  num_coup= -1 s'arrète là , SINON demande à l'utilisateur d'entrer une action avec ChoixAction () puis 
+	void _2a(int num_coup, std::string actions_poss); //  affiche les possibilités dans "l'interface", puis   SI  num_coup= -1 s'arrète là , SINON demande à l'utilisateur d'entrer une action avec ChoixAction () puis 
 			//séparateur: '  ;  '  entre chaque id d'action possible
-	void 3a(int id, std::string act);// affiche "Je " OU "L'adversaire" + "utilise" + le nom de l'action en question, trouvé grâce à rechAction() dans le champ titre du conteneur renvoyé
-	void 1fs(int id_gagnant);// serveur dit que partie est terminée , affiche qui a gagné 
+	void _3a(int id, std::string act);// affiche "Je " OU "L'adversaire" + "utilise" + le nom de l'action en question, trouvé grâce à rechAction() dans le champ titre du conteneur renvoyé
+	void _1fs(int id_gagnant);// serveur dit que partie est terminée , affiche qui a gagné 
 	
 	
 	//utilise par transfert
