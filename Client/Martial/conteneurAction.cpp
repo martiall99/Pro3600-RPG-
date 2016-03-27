@@ -3,7 +3,7 @@
 using namespace std;
 
 // ( + est la concaténation ici) donne titre+sep+type+sep+descr avec sep un pont virgule '  ;  '
-string Cont_action::toString() const
+string  Cont_action::toString() const
 {
     string resultat = "";
     resultat = titre + ";" + type + ";" + descr ;

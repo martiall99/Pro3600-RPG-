@@ -1,5 +1,9 @@
 #ifndef TRADUCTION_H_INCLUDED
 #define TRADUCTION_H_INCLUDED
+#include <string>
+#include <iostream>
+
+std::string coupeChaine(std::string &ch, char a);
 
 // ces fonctions décodents les messages de type Tx, elles sont appelées par decode
 //pour le liv2 en  général il n'y a pas de choix pour la fonction qui sera appelée suivant le type de message (elle est marquée à chaque ligne après " liv  2 : ..."
@@ -10,7 +14,6 @@
 
 //UTILISER la fonction coupeChaine() (voir plus haut) pour séparer selon un separateur
 
-
 	void iT0(std::string mess); //pour liv2 ce sera forcement 0c()
 			//pas de séparateur
 	void iT1(std::string mess); // liv  2 : renvoie vers  1ds() ou 1fs() suivant les bits du message (voir l'architecture)
@@ -20,14 +23,12 @@
 	void iT3(std::string mess); // liv  2 : 3a() pas de séparateur
 	void iT4(std::string mess); // liv  2 : on appelle 4a() DEUX FOIS (une pour chaque perso en séparant suivant ' . ' )
 			//séparateur: ' . ', on ne touche PAS aux ' ; '
-	void iT6(std::string mess); // liv  2 : 6a()
-			//on ne touche PAS aux séparateurs
+	void iT6(std::string mess); // liv  2 : 6a()//on ne touche PAS aux séparateurs
 
 //Variables globales
 // Transfert tran; bibliothèque bibl; Traduction trad; Client cli;
 int ID_1;
 int ID_2;
-
 
 //Trad
 bool partie_debutee;

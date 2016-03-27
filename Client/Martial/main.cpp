@@ -1,11 +1,10 @@
 #include <iostream>
+#include <string>
 #include "conteneurAction.h"
 #include "ConteneurCaractere.h"
-#include "traduction.h"
-#include <string>
+//#include "traduction.h"
 
 using namespace std;
-
 string coupeChaine(string &ch, char a)
 //Separe la chaine de caractere ch selon le seperateur a.
 {
@@ -23,9 +22,9 @@ string coupeChaine(string &ch, char a)
 	}
 }
 
-    void iT0(std::string mess)
-    //pour liv2 ce sera forcement _0c() pas de séparateur
-    {
+void iT0(std::string mess)
+//pour liv2 ce sera forcement _0c() pas de séparateur
+{
         string mess_int = mess ;
         mess_int.erase(0,1);   //Efface le premier caractère qui est correspond au booléen type0
         int ID_inutile_1 = stoi(coupeChaine(mess_int, ';'));
@@ -33,13 +32,12 @@ string coupeChaine(string &ch, char a)
         //_0c(ID_inutile_1,ID_inutile_2);
 
         // Cette partie est utile pour le test unitaire de iT0
-        cout << ID_inutile_1 << endl;
-        cout << ID_inutile_2 << endl;
-    }
+        cout << "l'id de 1 est " << ID_inutile_1 << endl;
+        cout << "l'id de 1 est " << ID_inutile_2 << endl;
+}
 
 	void iT1(std::string mess)
-	/* liv  2 : renvoie vers  1ds() ou 1fs() suivant les bits du message
-	(voir l'architecture) pas de séparateur */
+	/* liv  2 : renvoie vers  1ds() ou 1fs() suivant les bits du message (voir l'architecture) pas de séparateur */
 	{
 	    string mess_int = mess;
 	    int type_1 = stoi(mess_int.substr(0,1)); // on reccupère le 1er caractère de mess
