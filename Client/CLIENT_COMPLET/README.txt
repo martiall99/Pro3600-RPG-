@@ -11,7 +11,7 @@ Headers:
 	co/debug.h
 	co/Ecr.h
 	co/Lire.h
-	co/Serveur_E.h
+	
 
 
 Objets:
@@ -21,7 +21,6 @@ Objets:
 	co/debug.cpp
 	co/Ecrire.cpp
 	co/Lire.cpp
-	co/Serveur_E.cpp
 
 
 ------------------Sous code:blocks 
@@ -34,7 +33,7 @@ Headers:
 	co/debug.h
 	co/Ecr.h
 	co/Lire.h
-	co/Serveur_E.h
+
 
 	co/toString.h
 
@@ -45,7 +44,6 @@ Objets:
 	co/debug.cpp
 	co/Ecr.cpp
 	co/Lire.cpp
-	co/Serveur_E.cpp
 
 	co/To_stringcpp.cpp
 
