@@ -45,6 +45,7 @@ void Client_E::arret()
 void Client_E::envoiS(std::string mess)
 {
 	_1tS.ajoutAttente(mess);
+	debug("\n\nAJOUT");
 }
 bool Client_E::verif()
 {

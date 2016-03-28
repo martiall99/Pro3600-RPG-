@@ -49,7 +49,6 @@ bool Ecrire_Fichier::creerVide(string name)
 			cout << "ERREUR: Impossible de créer le fichier: " + name << endl;
 			return false;
 		}
-		monFlux << "la";
 		monFlux.close();
 		return true;
 	}
@@ -101,6 +100,7 @@ void Ecrire_Fichier::ecrit()
 			{
 				if (!fichExist(lock)) // si le fichier a déjà été lu 
 				{
+					debug("---------------------------------------Ecrit------------------");
 					ecritDans(en_attente.front());
 					en_attente.pop_front();
 				}

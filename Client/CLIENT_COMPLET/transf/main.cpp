@@ -296,7 +296,7 @@ void ChoixAction(int num, string choix, string act_pos)
 	{
 		if (choix == deb || choix == "0")
 		{
-			//envAct(num,deb)
+			envAct(num, stoi(deb));
 			return;
 		}
 		deb = coupeChaine(cop, ';');
@@ -468,7 +468,7 @@ void decodeTypeMessage(std::string mess)
 void envAct(int num_coup, int act)
 {
 	string mess = "3" + to_string(ID_1) + ";" + to_string(num_coup) + ";" + to_string(act);
-	//envoieMess(mess);
+	envoieMess(mess);
 }
 
 
@@ -559,9 +559,10 @@ int main()
 	decodeTypeMessage("615;1;charge;inflige des degats normaux/2;lechouille;speciale martiale : fait fuir l'adversaire.3;flammeche;petites flammes/4;saut jusquau ciel;yolo tmtc.5;ceci est un objet; objet objet");
 
 
-	c.arret();
+	
 
 	debug("FIN au prochain appui",true);
+	c.arret();
 
 }
 
