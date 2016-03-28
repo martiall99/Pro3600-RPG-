@@ -11,6 +11,8 @@ Headers:
 	co/debug.h
 	co/Ecr.h
 	co/Lire.h
+	Conteneurs_carac_action/Conteneur_carac.h
+	Conteneurs_carac_action/conteneurAction.h
 	
 
 
@@ -21,6 +23,8 @@ Objets:
 	co/debug.cpp
 	co/Ecrire.cpp
 	co/Lire.cpp
+	Conteneurs_carac_action/conteneurCaractère.cpp
+	Conteneurs_carac_action/conteneurAction.cpp
 
 
 ------------------Sous code:blocks 
