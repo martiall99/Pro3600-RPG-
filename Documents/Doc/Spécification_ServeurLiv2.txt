@@ -239,7 +239,7 @@ public:
 	
 	//util par perso
 	void changeAQuiJouer();// change id puis SI deb_tour==true met deb_tourà false et lance debTour() SINON met deb_tour à true et lance tour();
-	void tour();// 0) regarde a_qui_jouer ( PUIS vérifie aGagne() , interromp tout et envFin() si c'est le cas ) puis  1)recupere etatsPersos()  2) envEtats 3)recupere listeActionsPos() du bon joueur  puis 4) envActs() au bon joueur
+	void tour();// 0) regarde a_qui_jouer ( PUIS vérifie aGagne() , interromp tout et envFin() si c'est le cas ) puis  1)recupere les 2 etatsPersos()  et sépare par ' . ' 2) envEtats 3)recupere listeActionsPos() du bon joueur  puis 4) envActs() au bon joueur
 	
 	
 	
@@ -255,6 +255,6 @@ public:
 	void Act(string a);// SI l'action ac ="00" => changeAQuiJouer() de maitre_jeu  , SINON utilise rechID() des 4 traducteurs puis effectue la bonne action puis lance tour() 
 	void initTraducteurs();// ICI elle ne FAIT RIEN DU TOUT (dans le livrable 3 ce sera pas le cas), elle n'est PAS appelée par le constructeur 
 	std::string listeActionsPos(int id_j);//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène avec en séparateur ' /  '
-	std::string etatsPerso();//recupere le caracs.toString() et sépare par ' . '
+	std::string etatsPerso();//recupere le caracs.toString()
 
 	int aleat(int min, int max); // utiliser rand pour faire un nombre aleat entre min et max https://openclassrooms.com/courses/l-aleatoire-en-c-et-c-se-servir-de-rand-1
