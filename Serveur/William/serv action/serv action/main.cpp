@@ -1,5 +1,5 @@
 #include "debug.h"
-#include "action.h"
+#include "traducteur.h"
 #include "fauxPerso.h"
 
 
@@ -41,13 +41,33 @@ void test_persActions()
 	debug("\nmagie =>");
 	debug(mag.toString());
 	mag.eff(perso1, perso2);
-
+	PotionSoinGenerique pot = { 13, "Potion de vie", "Regen [5-30] par potion", 2, 5, 30 };
+	debug("\npotion =>");
+	debug(pot.toString());
+	pot.eff(perso1, perso2);
+	debug(pot.toString());
+	pot.eff(perso1, perso2);
+	debug(pot.toString());
+	pot.eff(perso1, perso2);
 
 	debug("fin", true);
 }
 
 int main()
 {
-	test_persActions();
+
+	//test_persActions();
+	Personnage p1("p1");
+	Personnage p2("p2");
+	TradActions trad;
+	debug("initialisation traducteur");
+	debug(trad.listeID());
+	debug(trad.toString());
+	debug("\nutilisation traducteur");
+	//trad.utiliseID(1, p1, p2);
+	Action *a = trad.rechID(1);
+	debug(a->toString());
+	a->eff(p1, p2);
+	debug("FIN au prochain appui", true);
 	return 0;
 }
