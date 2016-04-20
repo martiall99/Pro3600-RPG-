@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-int main()
+void test_persActions()
 {
 	debug("hello world");
 
@@ -33,13 +33,21 @@ int main()
 	AttaqueGenerique atq;
 	debug(atq.toString());
 	atq.eff(perso1, perso2);
-	debug("\nsans erreur =>");
+	debug("\n attaque sans erreur =>");
 	atq = { 12,"attaque","zou",5,20,25 };
 	debug(atq.toString());
 	atq.eff(perso1, perso2);
+	MagieAttaqueGenerique mag = { 25,"magie offensive", "zlaam", 5,30,45,70 };
+	debug("\nmagie =>");
+	debug(mag.toString());
+	mag.eff(perso1, perso2);
 
 
 	debug("fin", true);
-	return 0;
+}
 
+int main()
+{
+	test_persActions();
+	return 0;
 }
