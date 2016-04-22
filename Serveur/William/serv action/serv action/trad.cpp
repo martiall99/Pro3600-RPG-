@@ -18,34 +18,22 @@ string TradActions::listeID()
 {
 	return("1;2;3;4;5;");// ATTENTION le ';' a la fin est NECESSAIRE
 }
-bool TradActions::utiliseID(int id_r, Personnage &adv, Personnage &moi)
-{
-	if (id_r == 1)
-		return (attaqueSimple.eff(adv,moi));
-	else if (id_r == 2)
-		return (attaquePuissante.eff(adv, moi));
-	else if (id_r == 3)
-		return (bouleFeu.eff(adv, moi));
-	else if (id_r == 4)
-		return (potionFaible.eff(adv, moi));
-	else if (id_r == 2)
-		return (potionForte.eff(adv, moi));
-	else
-	{
-		Action a;// c'est moche mais bon ...
-		return (a.eff(adv, moi));
-	}
-}
 Action* TradActions::rechID(int id_r)
 {
 	if (id_r == 1)
-		return &attaqueSimple;
+		return (&attaqueSimple);
+	else if (id_r == 2)
+		return (&attaquePuissante);
+	else if (id_r == 3)
+		return (&bouleFeu);
+	else if (id_r == 4)
+		return (&potionFaible);
+	else if (id_r == 5)
+		return (&potionForte);
 	else
 	{
-		Action a;
-		return &a;
+		return (&erreur);
 	}
-
 }
 
 

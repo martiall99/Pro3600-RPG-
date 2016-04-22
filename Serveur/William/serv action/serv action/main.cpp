@@ -64,10 +64,14 @@ int main()
 	debug(trad.listeID());
 	debug(trad.toString());
 	debug("\nutilisation traducteur");
-	//trad.utiliseID(1, p1, p2);
-	Action *a = trad.rechID(1);
-	debug(a->toString());
-	a->eff(p1, p2);
+	Action *a=0;
+	for (int i = 0; i < 6; i++)
+	{
+		a= trad.rechID(i);
+		debug(a->toString());
+		a->eff(p1, p2);
+		debug(" ");
+	}
 	debug("FIN au prochain appui", true);
 	return 0;
 }

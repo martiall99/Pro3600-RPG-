@@ -10,12 +10,15 @@ class Personnage;
 
 class TradActions
 {
+public:
 	AttaqueGenerique attaqueSimple;
 	AttaqueGenerique attaquePuissante;
 	MagieAttaqueGenerique bouleFeu;
 	PotionSoinGenerique potionFaible;
 	PotionSoinGenerique potionForte;
 	Action erreur;
+	Personnage *moi;
+	Personnage *adv;
 public:// pour le LIV2 c'est PAS encore un "tableau intelligent" juste quelquechose qui définit et créé des objets
 		   //utilisees par initTraducteurs() de Personnage
 
