@@ -1,4 +1,4 @@
-//----------------------------CLASSES PRELIMINAIRES (utilisées par personnage)------------------
+//----------------------------CLASSES PRELIMINAIRES (utilisÃ©es par personnage)------------------
 
 typedef struct Conteneur_carac Conteneur_carac;
 struct Conteneur_carac
@@ -27,25 +27,27 @@ class Action
 	std::string toString();
 	
 public:
-	Action();//constructeur "vide" créer juste les structures en les laissant vides
+	Action();//constructeur "vide" crÃ©er juste les structures en les laissant vides
 };
 std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Action  et ce qu'il faut
 
 class Trad_action
 {
 	vector <int> ID;
-	vector <Action> act;// ATTENTION il est possible que ceci ne marche pas (troncature des classes qui heritent ne gardant que les arguments et les methodes de la classe mère (donc en gros rien de ce qui nous interesse) ) et qu'il faille faire avec un pointeur: ' vector<Action*> act; ' et donc fonctionnement différent
-	
+	vector <Action*> act;// oui c'est un mineur , utiliser -> pour accÃ©der aux mÃ©thodes/variables a la place du point usuel !
+        Action erreur// renvoyÃ© par rechid si il ne trouve pas de correspondance	
 public://utilisees par initTraducteurs() de Personnage
 
-	Trad_action();//constructeur "vide" créer juste les structures en les laissant vides
+	Trad_action();//constructeur "vide" crÃ©er juste les structures en les laissant vides
+        Trad_action(Trad_action a_copier)//constructeurdecopie, il est nÃ©cessaire car on utilise des pointeurs
+        ~Trad_action()//destructeur probablement nÃ©cessaire avec les pointeurs
 	
-	void ajAction(int id_a, Action ac);//même chose peut etre Action* act
-	void enlAction(int id_a);
-	std::string toString();//utilisé par l'opérateur <<
+	void ajAction(int id_a, Action *ac);//ajoute l id et le pointeur dans chaque tableau avec des push front 
+	void enlAction(int id_a);// utilise rech() puis supprime les deux cases correspondantes
+	std::string toString();//utilisÃ© par l'opÃ©rateur <<
 	bool verifPasDoublons();
-	
-	Action rechID(int id_r);// c'est la "principale" de cette classe et MEME CHOSE peut être renvoyer un pointeur à la place de l'objet...
+	int rech(int id);//renvoie le numÃ©ro de la case du tableau correspondant a l id
+	Action* rechIDhID(int id_r);// utilise rech() puis r'envoie le pointeur du deuxiÃ¨me tableau dans la mÃªme case 
 };
 std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Trad_action  et ce qu'il faut
 
@@ -56,13 +58,13 @@ class Tab_buffs_effectifs
 	vector <int> nb_tours_restants;
 	int buffer_boucle;//init a 0 dans le constructeur
 public:		
-	Tab_buffs_effectifs();//constructeur "vide" créer juste les structures en les laissant vides
+	Tab_buffs_effectifs();//constructeur "vide" crÃ©er juste les structures en les laissant vides
 	
 	void ajBuff(int ID_b, int nb_tours);
 	void enlBuff(int ID_b);
-	void decrementeBuff(int ID_b);//decremente de 1 le compteur nb_tours_restants  ATTNETION n'appelle PAS enlbuff si arrive à 0 (sinon problème de parcours du tableau)
+	void decrementeBuff(int ID_b);//decremente de 1 le compteur nb_tours_restants  ATTNETION n'appelle PAS enlbuff si arrive Ã  0 (sinon problÃ¨me de parcours du tableau)
 	void enlTousBuffsFinis(); parcours le tableau et appelle enlBuff si nb_tours_restants arrive a 0 ATTENTION 
-	int parcourBuff();// lit et renvoie l' ID de l'element en position buffer_boucle, lorsque l'on arrive à la fin du tableau, on appelle enlTousBuffsFinis() , on remet buffer à 0 et on renvoie -1 
+	int parcourBuff();// lit et renvoie l' ID de l'element en position buffer_boucle, lorsque l'on arrive Ã  la fin du tableau, on appelle enlTousBuffsFinis() , on remet buffer Ã  0 et on renvoie -1 
 	std::string toString();
 };
 std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Tab_buffs_effectifs  et ce qu'il faut
@@ -76,8 +78,8 @@ std::operator<<();// REMPLIR LA PARENTHESE ICI avec un Tab_buffs_effectifs  et c
 
 //Variables communes
 // Transfert tr; Aiguillage aig; Superviseur supe; Maitre_jeu m_j; 
-const int id_1; 
-const int id_2;
+ int id_1; 
+ int id_2;
 
 
 //variables de :
@@ -104,20 +106,21 @@ Conteneur_carac caracs;
 Trad_action magies;
 Trad_action attaques;
 Trad_action objets;
+Trad_action buffs;
 Tab_buffs_effectifs buff_eff;
 
 
-//Méthodes de :
+//MÃ©thodes de :
 
 //transfert:
 private:
 	void tCoClient();//garde l'IP dans IPx et appelle creer0Co
 	void tDecoClient();//appelle creer0Deco
 	void recoitMess();
-	void creer0Co(int id);//créer un message de type 0 dans lequel il attribue l'IDx qui correspond au x de IPx  et transmet a aiguillage (vers superviseur)
-	void creer0Deco(int id);//créer un message de type 0 indiquant l'id du joueur qui s'est déco et transmet a aiguillage (vers superviseur)
+	void creer0Co(int id);//crÃ©er un message de type 0 dans lequel il attribue l'IDx qui correspond au x de IPx  et transmet a aiguillage (vers superviseur)
+	void creer0Deco(int id);//crÃ©er un message de type 0 indiquant l'id du joueur qui s'est dÃ©co et transmet a aiguillage (vers superviseur)
 	
-public:// utilisée par aiguillage
+public:// utilisÃ©e par aiguillage
 	void envoiMess(std::string mess );
 //util par superviseur
 	void ouvrirConnex();
