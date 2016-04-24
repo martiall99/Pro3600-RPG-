@@ -6,11 +6,11 @@
 
 using namespace std;
 
-Personnage::Personnage( string name, int pv, int mana, int pa, int def, int res, int cri, int esq, int renv)
+Personnage::Personnage( string name, int pv, int mana, int pa, int def, int res, int cri, int esq, int renv):attaques(this), magies(this),objets(this)
 {
 	caracs = { pv, mana, pa, def, res, cri, esq, renv };
 	nom = name;
-
+	cible = 0;
 }
 
 
@@ -138,11 +138,11 @@ bool  Personnage::utiliserMana(int coutMana) //renvoie true si le personnage a a
 
 void Personnage::initTraducteurs()
 {
-	attaques.attaqueSimple = AttaqueGenerique(1, "Attaque simple", "[5-25] pour 2 PA", 2, 5, 25);
-	attaques.attaquePuissante = AttaqueGenerique(2, "Attaque puissante", "[20-45] pour 4 PA", 4, 20, 45);
-	magies.bouleFeu = MagieAttaqueGenerique(3, "Boule de feu", "[35-75] pour 2 PA et 25 mana", 2, 25, 35, 75);
-	objets.potionFaible = PotionSoinGenerique(4, "Potion de soin faible", "[5,10] par potion", 5, 5, 10);
-	objets.potionForte = PotionSoinGenerique(5, "Potion de soin puissante", "[15,40] par potion", 2, 15, 40);
+	attaques.ajAction (1, new AttaqueGenerique(1, "Attaque simple", "[5-25] pour 2 PA", 2, 5, 25));
+	attaques.ajAction(2, new AttaqueGenerique(2, "Attaque puissante", "[20-45] pour 4 PA", 4, 20, 45));
+	magies.ajAction(3, new MagieAttaqueGenerique(3, "Boule de feu", "[35-75] pour 2 PA et 25 mana", 2, 25, 35, 75));
+	objets.ajAction(4, new PotionSoinGenerique(4, "Potion de soin faible", "[5,10] par potion", 5, 5, 10));
+	objets.ajAction(5, new PotionSoinGenerique(5, "Potion de soin puissante", "[15,40] par potion", 2, 15, 40));
 }
 
 string Personnage::listeActionsPos()//on recupere les 3 attaques.listeID(), magies.listeID(), objets.listeID()  et on les concatène sans séparateur (il est deja ajoute par les traducteurs)
@@ -175,7 +175,16 @@ bool Personnage::aMana(int man)
 	else
 		return false;
 }
-
+void Personnage::ajCible(Personnage *mechant)
+{
+	cible = mechant;
+}
+Personnage::~Personnage()
+{
+	attaques.viderTrad();
+	magies.viderTrad();
+	objets.viderTrad();
+}
 
 
 

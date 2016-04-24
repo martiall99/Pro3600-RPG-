@@ -1,8 +1,8 @@
-Codé pour Windows (testé sous Seven avec visual studio 2015)
+﻿Codé pour Windows (testé sous Seven avec visual studio 2015)
 1° Inclure dans le projet
 2° A modifier pour utiliser
 
-======================================1° Inclure dans le projet
+======================================1° Inclure dans le projet Tous les fichiers SAUF ceux dans le dossier test
 -------------Sous Visual Studio
 Headers:
 	transf/ClienC.h

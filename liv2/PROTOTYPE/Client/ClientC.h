@@ -1,8 +1,8 @@
 #ifndef CLIENT_C
 #define CLIENT_C
 
-#include "../Conteneurs_carac_action/Conteneur_carac.h"
-#include "../Conteneurs_carac_action/conteneurAction.h"
+#include "Conteneurs_carac_action/Conteneur_carac.h"
+#include "Conteneurs_carac_action/conteneurAction.h"
 
 #include <vector>
 #include <string>

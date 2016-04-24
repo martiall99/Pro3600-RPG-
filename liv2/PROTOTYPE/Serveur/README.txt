@@ -1,0 +1,1 @@
+Inclure tous les fichiers SAUF ceux dans le dossier test

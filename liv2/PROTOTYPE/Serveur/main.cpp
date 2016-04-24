@@ -42,8 +42,8 @@ void init()
 	//maitre_jeu
 	num_coup_attendu = 0;
 	a_qui_jouer = ID_1;
-	perso1 = { "p1" };
-	perso2 = { "p2" };
+	perso1.nom = "p1";
+	perso2.nom = "p2";
 	j_1_co = false;
 	j_2_co = false;
 	deb_tour = true;
@@ -232,7 +232,7 @@ chaque fois l'ID du destinataire en PREMIER ( ATTENTION !! )*/
 void envActs(int numeroCouAttendu, std::string a, int ID_dest)
 //T2a
 {
-	string mess = "2" + to_string(numeroCouAttendu) + ";" + a ;
+	string mess = "2" + to_string(numeroCouAttendu) + ";" + a  ;
 	envoiMess(mess, ID_dest);
 	//cout << "Message T2a : " << mess << ", destinataire id : " << ID_dest << endl;
 }
@@ -250,8 +250,9 @@ string etatsPersos(int id)
 void initBibli()
 {
 	string chaine_a_envoyer="";
-	chaine_a_envoyer = perso1.attaques.toString() + "." + perso1.magies.toString() + "." + perso1.objets.toString();
-	debug("env Bibli", true);
+	chaine_a_envoyer = perso1.attaques.toString();
+	chaine_a_envoyer += "." + perso1.magies.toString() + "." + perso1.objets.toString();
+	debug("env Bibli");
 	envBibli(chaine_a_envoyer);
 }
 
@@ -263,6 +264,12 @@ void debutJeu()
 	perso1.initTraducteurs();
 	perso2.initTraducteurs();
 
+	perso1.ajCible(&perso2);
+	perso2.ajCible(&perso1);
+
+	debug("cible 1 ========"+perso1.cible->nom);
+	debug("cible 2 ========" + perso2.cible->nom);
+
 	debug("\n\nEnvoyer etats persos");
 	envEtats();
 
@@ -270,7 +277,7 @@ void debutJeu()
 	initBibli();
 	debug("\n\nEnvoyer debut", true);
 	envDeb();
-	debug("\n\nDebut tour", true);
+	debug("\n\nDebut tour");
 	debTour();
 	
 }
@@ -400,7 +407,7 @@ void Personnage::Act(std::string a, Personnage &adv)// SI l'action ac ="00" => c
 			else
 			{
 				debug(nom +" effectue : \n" + Ac->toString()+"\n");		
-				Ac->eff(adv, *this);
+				Ac->eff();
 				
 			}
 		

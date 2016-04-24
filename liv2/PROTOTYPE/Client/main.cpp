@@ -1,6 +1,6 @@
 #include "ClientC.h"
-#include "../co/debug.h"
-#include "../co/Client_E.h"
+#include "co/debug.h"
+#include "co/Client_E.h"
 #include <windows.h> //pour sleep
 using namespace std;
 
@@ -595,7 +595,7 @@ int main()
 	init();
 
 	string id = "";
-	afficher("veuillez entrer votre ID joueur");
+	afficher("veuillez entrer votre ID joueur : 1 ou 2 UNIQUEMENT");
 	lire(id);
 	ID_1=stoi(id);
 	

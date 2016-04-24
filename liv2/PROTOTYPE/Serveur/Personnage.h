@@ -13,6 +13,7 @@ class Personnage
 {
 public:
 	Conteneur_carac caracs;
+	Personnage *cible;
 public://ouioui ce sont bien ses variables
 	
 	TradActions attaques;	
@@ -22,6 +23,7 @@ public://ouioui ce sont bien ses variables
 	
 public:
 	Personnage(std::string name = "Sans nom", int pv = 1000, int mana = 100, int pa = 0, int def = 5, int res = 3, int cri = 7, int esq = 6, int renv = 2);
+	~Personnage();
 	void recevoirDegats(int min, int max, Personnage &source);// utilise aleat() et implemente la formule de degats (qui depend de la DEF de ce perso) qu'on avait mise dans le liv1
 	void recevoirDegatsMagiques(int min, int max, Personnage &source);// meme chose avec RES 
 	void recevoirSoins(int min, int max);
@@ -35,6 +37,7 @@ public:
 	std::string etatsPerso();//recupere le caracs.toString() 
 	bool aPA(int pa);
 	bool aMana(int man);
+	void ajCible(Personnage *mechant);// affecte le pointeur cible
 
 	int aleat(int min, int max); // utiliser rand pour faire un nombre aleat entre min et max https://openclassrooms.com/courses/l-aleatoire-en-c-et-c-se-servir-de-rand-1
 };
